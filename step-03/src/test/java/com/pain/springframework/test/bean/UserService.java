@@ -7,6 +7,9 @@ package com.pain.springframework.test.bean;
 public class UserService {
     private String name;
 
+    public UserService() {
+    }
+
     public UserService(String name) {
         this.name = name;
     }
