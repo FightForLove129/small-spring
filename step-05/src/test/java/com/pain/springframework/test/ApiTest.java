@@ -1,6 +1,7 @@
 package com.pain.springframework.test;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.XmlUtil;
 import com.pain.springframework.beans.PropertyValues;
 import com.pain.springframework.beans.PropertyValue;
 import com.pain.springframework.beans.factory.config.BeanDefinition;
@@ -13,6 +14,8 @@ import com.pain.springframework.test.bean.UserDao;
 import com.pain.springframework.test.bean.UserService;
 import org.junit.Before;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,6 +81,9 @@ public class ApiTest {
         System.out.println(content);
     }
 
+    /**
+     * 此处是有问题的，如果要处理xml解析，请自行研究
+     */
     @Test
     public void test_xml() {
         // 1.初始化 BeanFactory
