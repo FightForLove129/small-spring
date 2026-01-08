@@ -1,4 +1,4 @@
-package com.pain.springframework.beans.factory;
+package com.pain.springframework.beans;
 
 /**
  * 作者：DerekYRC https://github.com/DerekYRC/mini-spring

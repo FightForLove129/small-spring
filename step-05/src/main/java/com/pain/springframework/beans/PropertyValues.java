@@ -1,7 +1,5 @@
 package com.pain.springframework.beans;
 
-import com.pain.springframework.beans.factory.PropertyValue;
-
 import java.util.ArrayList;
 import java.util.List;
 
