@@ -3,7 +3,7 @@ package com.pain.springframework.beans.factory.support;
 import cn.hutool.core.bean.BeanUtil;
 import com.pain.springframework.beans.BeansException;
 import com.pain.springframework.beans.PropertyValues;
-import com.pain.springframework.beans.factory.PropertyValue;
+import com.pain.springframework.beans.PropertyValue;
 import com.pain.springframework.beans.factory.config.BeanDefinition;
 import com.pain.springframework.beans.factory.config.BeanReference;
 

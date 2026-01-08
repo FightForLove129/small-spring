@@ -1,13 +1,21 @@
 package com.pain.springframework.test;
 
+import cn.hutool.core.io.IoUtil;
 import com.pain.springframework.beans.PropertyValues;
-import com.pain.springframework.beans.factory.PropertyValue;
+import com.pain.springframework.beans.PropertyValue;
 import com.pain.springframework.beans.factory.config.BeanDefinition;
 import com.pain.springframework.beans.factory.config.BeanReference;
 import com.pain.springframework.beans.factory.support.DefaultListableBeanFactory;
+import com.pain.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import com.pain.springframework.core.io.DefaultResourceLoader;
+import com.pain.springframework.core.io.Resource;
 import com.pain.springframework.test.bean.UserDao;
 import com.pain.springframework.test.bean.UserService;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @Author：tdpain
@@ -36,6 +44,56 @@ public class ApiTest {
         UserService userService = (UserService) beanFactory.getBean("userService");
         userService.queryUserInfo();
     }
+
+    private DefaultResourceLoader resourceLoader;
+
+    @Before
+    public void init() {
+        resourceLoader = new DefaultResourceLoader();
+    }
+
+    @Test
+    public void test_classpath() throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:important.properties");
+        InputStream inputStream = resource.getInputStream();
+        String content = IoUtil.readUtf8(inputStream);
+        System.out.println(content);
+    }
+
+    @Test
+    public void test_file() throws IOException {
+        Resource resource = resourceLoader.getResource("src/test/resources/important.properties");
+        InputStream inputStream = resource.getInputStream();
+        String content = IoUtil.readUtf8(inputStream);
+        System.out.println(content);
+    }
+
+    @Test
+    public void test_url() throws IOException {
+        // 网络原因可能导致GitHub不能读取，可以放到自己的Gitee仓库。读取后可以从内容中搜索关键字；OLpj9823dZ
+        // 直接运行没问题，但是没有在pom上面配置作者，会导致获取不到properties
+        Resource resource = resourceLoader.getResource("https://github.com/fuzhengwei/small-spring/blob/main/small-spring-step-05/src/test/resources/important.properties");
+        InputStream inputStream = resource.getInputStream();
+        String content = IoUtil.readUtf8(inputStream);
+        System.out.println(content);
+    }
+
+    @Test
+    public void test_xml() {
+        // 1.初始化 BeanFactory
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2. 读取配置文件&注册Bean
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions("classpath:spring.xml");
+
+        // 3. 获取Bean对象调用方法
+        UserService userService = beanFactory.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("测试结果：" + result);
+    }
+
+
 
 
 }
